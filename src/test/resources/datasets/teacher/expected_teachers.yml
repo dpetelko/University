@@ -1,0 +1,8 @@
+teachers:
+  - id: 1
+    first_name: "Dmitry"
+    last_name: "Petelko"
+    email: "teacher1@11.ru"
+    phone_number: "+78989632121"
+    subject_id: 1
+    department_id: 1

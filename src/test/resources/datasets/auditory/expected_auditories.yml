@@ -1,0 +1,5 @@
+auditories:
+  - id: "regex:\\d+"
+    name: "CCC"
+    description: "Middle auditory"
+    capacity: 100

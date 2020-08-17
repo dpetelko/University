@@ -1,0 +1,5 @@
+subjects:
+  - id: 1
+    name: "Geography"
+    description: "Seeks an understanding of Earth and its human and natural complexities"
+    department_id: 1

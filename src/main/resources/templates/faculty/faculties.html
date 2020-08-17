@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/fragments :: header">
+</head>
+
+<body>
+<div th:insert="fragments/fragments :: menu"></div>
+<h3 align="center">Faculties list</h3>
+<div class="container-sm">
+    <a th:href="@{/faculties/edit}" class="btn btn-secondary">Add new Faculty</a>
+    <p></p>
+    <div th:insert="fragments/fragments :: notification"></div>
+    <table class="table table-stripped">
+        <thead>
+        <tr>
+            <td><strong>Name</strong></td>
+            <td></td>
+        </tr>
+        </thead>
+        <th:block th:each="faculty:${faculties}">
+            <tr th:if="${faculty.deleted==false}">
+                <td th:text="${faculty.name}"></td>
+                <td>
+                    <div class="btn-group btn-group-sm">
+                        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">Action
+                        </button>
+                        <div class="dropdown-menu">
+                            <a th:href="@{/faculties/getById/(id=${faculty.Id})}" class="dropdown-item">Info</a>
+                            <a th:href="@{/faculties/edit/(id=${faculty.id})}" class="dropdown-item">Edit</a>
+                            <a th:href="@{/faculties/delete/(id=${faculty.Id})}"
+                               class="dropdown-item text-danger font-weight-bold" id="deleteButton">Delete</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr th:unless="${faculty.deleted==false}" class="table-danger">
+                <td th:text="${faculty.name}"></td>
+                <td>
+                    <div class="btn-group btn-group-sm">
+                        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">Action
+                        </button>
+                        <div class="dropdown-menu">
+                            <a th:href="@{/faculties/getById/(id=${faculty.Id})}" class="dropdown-item">Info</a>
+                            <a th:href="@{/faculties/undelete/(id=${faculty.Id})}"
+                               class="dropdown-item text-danger font-weight-bold" id="restoreButton">Restore</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </th:block>
+    </table>
+</div>
+<div th:insert="fragments/fragments :: deleteConfirmModal"></div>
+<div th:insert="fragments/fragments :: deleteConfirmScript"></div>
+<div th:insert="fragments/fragments :: restoreConfirmModal"></div>
+<div th:insert="fragments/fragments :: restoreConfirmScript"></div>
+</body>
+</html>

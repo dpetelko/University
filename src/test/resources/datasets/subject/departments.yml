@@ -1,0 +1,4 @@
+departments:
+  - id: 1
+    name: "Humanitarian Department"
+    description: "FU"

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/fragments :: header">
+</head>
+
+<body>
+<div th:insert="fragments/fragments :: menu"></div>
+<h3 align="center">Lesson information</h3>
+
+<div class="container-sm">
+    <div th:insert="fragments/fragments :: notification"></div>
+
+    <form th:unless="${lesson==null}">
+        <div class="form-group row">
+            <label for="id" class="col-sm-2 col-form-label">Date:</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext"
+                       th:value="${#temporals.format(lesson.date, 'dd.MM.yyyy')}">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="id" class="col-sm-2 col-form-label">Lecture:</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" th:utext="${lesson.lectureName+', start time '+lesson.lectureStartTime}">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="id" class="col-sm-2 col-form-label">Auditory:</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" th:value="${lesson.auditoryName}">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="id" class="col-sm-2 col-form-label">Subject:</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" th:value="${lesson.subjectName}">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="id" class="col-sm-2 col-form-label">Teacher:</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" th:value="${lesson.teacherFirstName+' '+lesson.teacherLastName}">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="id" class="col-sm-2 col-form-label">Group list:</label>
+            <div class="col-sm-10">
+                <ul style="height: 100px; width: 350px; overflow: auto">
+                <li th:each="group : ${lesson.groups}">
+                    <input type="text" readonly class="form-control-plaintext" th:value="${group.name}"/>
+                </li>
+                </ul>
+            </div>
+        </div>
+
+
+
+
+
+        <div th:unless="${lesson.deleted==true}" class="btn-group">
+            <a th:href="@{/lessons/lessons}" class="btn btn-secondary">Back</a>
+            <a th:href="@{/lessons/edit/(id=${lesson.id})}" class="btn btn-warning">Edit</a>
+            <a th:href="@{/lessons/delete/(id=${lesson.id})}" class="btn btn-danger" id="deleteButton">Delete</a>
+        </div>
+
+        <div th:if="${lesson.deleted==true}" class="btn-group">
+            <a th:href="@{/lessons/lessons}" class="btn btn-secondary">Back</a>
+            <a th:href="@{/lessons/undelete/(id=${lesson.id})}" class="btn btn-danger" id="restoreButton">Restore</a>
+        </div>
+    </form>
+
+    <div th:if="${lesson==null}">
+        <input type="button" class="btn btn-secondary" value="Back" onclick="history.back()">
+    </div>
+
+</div>
+
+<div th:insert="fragments/fragments :: deleteConfirmModal"></div>
+<div th:insert="fragments/fragments :: deleteConfirmScript"></div>
+<div th:insert="fragments/fragments :: restoreConfirmModal"></div>
+<div th:insert="fragments/fragments :: restoreConfirmScript"></div>
+</body>
+</html>

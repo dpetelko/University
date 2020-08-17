@@ -1,0 +1,13 @@
+faculties:
+  - id: 1
+    name: "Psy"
+    description: "FU"
+departments:
+  - id: 1
+    name: "Humanitarian Department"
+    description: "FU"
+    faculty_id: 1
+  - id: 2
+    name: "Technical Department"
+    description: "FU"
+    faculty_id: 1

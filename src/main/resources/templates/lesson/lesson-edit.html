@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/fragments :: header">
+</head>
+
+<body>
+<div th:insert="fragments/fragments :: menu"></div>
+<br>
+<h3 align="center" th:text="${headerString}"></h3>
+<br>
+
+<div class="container-sm">
+    <div th:insert="fragments/fragments :: notification"></div>
+    <form action="#" th:action="@{/lessons/edit}" th:object="${lesson}" method="post">
+
+        <div class="form-group row">
+            <label class="col-form-label">Enter date:</label>
+            <input type="date" class="form-control" th:field="*{date}" th:value=${date}/>
+            <input type="hidden" class="form-control" th:field="*{id}" th:value=${id}/>
+            <span class="font-italic text-danger" th:if="${#fields.hasErrors('date')}"
+                  th:errors="*{date}"></span>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-form-label">Select lecture:</label>
+            <select class="form-control" th:field="*{lectureId}">
+                <option th:each="lecture:${lectureSelect}" th:value="${lecture.id}"
+                        th:utext="${lecture.name+', start time '+lecture.startTime}"></option>
+            </select>
+            <span class="font-italic text-danger" th:if="${#fields.hasErrors('lectureId')}"
+            th:errors="*{lectureId}"></span>
+
+        </div>
+
+        <div class="form-group row">
+            <label class="col-form-label">Select auditory:</label>
+            <select class="form-control" th:field="*{auditoryId}">
+                <option th:each="auditory:${auditorySelect}" th:value="${auditory.id}"
+                        th:utext="${auditory.name}"></option>
+            </select>
+            <span class="font-italic text-danger" th:if="${#fields.hasErrors('auditoryId')}"
+                  th:errors="*{auditoryId}"></span>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-form-label">Select subject:</label>
+            <select class="form-control" th:field="*{subjectId}">
+                <option th:each="subject:${subjectSelect}" th:value="${subject.id}" th:utext="${subject.name}"></option>
+            </select>
+            <span class="font-italic text-danger" th:if="${#fields.hasErrors('subjectId')}"
+                  th:errors="*{subjectId}"></span>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-form-label">Select teacher:</label>
+            <select class="form-control" th:field="*{teacherId}">
+                <option th:each="teacher:${teacherSelect}" th:value="${teacher.id}"
+                        th:utext="${teacher.firstName+' '+teacher.lastName}"></option>
+            </select>
+            <span class="font-italic text-danger" th:if="${#fields.hasErrors('teacherId')}"
+                  th:errors="*{teacherId}"></span>
+        </div>
+
+
+
+        <div class="form-group">
+            <label class="col-form-label">Select groups:</label>
+            <div class="col-sm-10">
+                <input type="hidden" th:field="*{id}"/>
+                <div th:each="group : ${groupSelect}">
+                    <input type="checkbox" th:id="${{group}}" th:value="${{group}}" th:field="*{groups}"/>
+                    <label th:for="${{group}}" th:text="${group.name}"/>
+                </div>
+                <span class="font-italic text-danger" th:if="${#fields.hasErrors('groups')}"
+                      th:errors="*{groups}"></span>
+            </div>
+        </div>
+
+
+
+
+        <div class="btn-group">
+            <input type="submit" class="btn btn-success" value="Save"/>
+            <a th:href="@{/lessons/edit/(id=${lesson.id})}" class="btn btn-warning">Reset</a>
+            <a th:href="@{/lessons/lessons}" class="btn btn-danger">Cancel</a>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

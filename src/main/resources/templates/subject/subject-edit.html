@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/fragments :: header">
+</head>
+
+<body>
+<div th:insert="fragments/fragments :: menu"></div>
+<br>
+<h3 align="center" th:text="${headerString}"></h3>
+<br>
+<div class="container-sm">
+    <div th:insert="fragments/fragments :: notification"></div>
+    <form action="#" th:action="@{/subjects/edit}" th:object="${subject}" method="post">
+        <div class="form-group row">
+            <label class="col-form-label">Enter Subject name:</label>
+            <input type="text" class="form-control" th:field="*{name}" th:value=${name}/>
+            <input type="hidden" class="form-control" th:field="*{id}" th:value=${id}/>
+            <span class="font-italic text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-form-label">Enter Subject description:</label>
+            <input type="text" class="form-control" th:field="*{description}" th:value=${description}/>
+            <span class="font-italic text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-form-label">Select department:</label>
+            <select class="form-control"
+                    th:field="*{departmentId}">
+                <option th:value="null">Department not assigned</option>
+                <option th:each="department:${departmentSelect}" th:value="${department.id}"
+                        th:utext="${department.name}"></option>
+            </select>
+            <span class="font-italic text-danger" th:if="${#fields.hasErrors('departmentName')}" th:errors="*{departmentName}"></span>
+        </div>
+        <div class="btn-group">
+            <input type="submit" class="btn btn-success" value="Save"/>
+            <input type="reset" class="btn btn-warning" value="Reset"/>
+            <a th:href="@{/subjects/getAll}" class="btn btn-danger">Cancel</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

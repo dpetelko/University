@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/fragments :: header">
+</head>
+
+<body>
+    <div th:insert="fragments/fragments :: menu"></div>
+    <h3 align="center">Students list</h3>
+    <div class="container-sm">
+        <a th:href="@{/students/edit}" class="btn btn-secondary">Add new Student</a>
+        <p></p>
+        <div th:insert="fragments/fragments :: notification"></div>
+        <table class="table table-stripped">
+            <thead>
+                <tr>
+                    <td><strong>First name</strong></td>
+                    <td><strong>Last Name</strong></td>
+                    <td><strong>Group Name</strong></td>
+                    <td></td>
+                </tr>
+            </thead>
+            <th:block th:each="student:${students}">
+                <tr th:if="${student.deleted==false}">
+                    <td th:text="${student.firstName}"></td>
+                    <td th:text="${student.lastName}"></td>
+                    <td th:text="${student?.groupName}"></td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">Action</button>
+                            <div class="dropdown-menu">
+                                <div th:unless="${student.groupId==null}">
+                                    <a th:href="@{/lessons/personal-lessons/(groupId=${student.groupId})}" class="dropdown-item">Get schedule</a>
+                                </div>
+                                <a th:href="@{/students/getById/(id=${student.id})}" class="dropdown-item">Info</a> 
+                                <a th:href="@{/students/edit/(id=${student.id})}" class="dropdown-item">Edit</a>
+                                <a th:href="@{/students/delete/(id=${student.id})}" class="dropdown-item text-danger font-weight-bold" id="deleteButton">Delete</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr th:unless="${student.deleted==false}" class="table-danger">
+                    <td th:text="${student.firstName}"></td>
+                    <td th:text="${student.lastName}"></td>
+                    <td th:text="${student?.groupName}"></td>
+                    
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">Action</button>
+                            <div class="dropdown-menu">
+                                <a th:href="@{/students/getById/(id=${student.id})}" class="dropdown-item">Info</a> 
+                                <a th:href="@{/students/undelete/(id=${student.Id})}" class="dropdown-item text-danger font-weight-bold" id="restoreButton">Restore</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </th:block>
+        </table>
+    </div>
+    <div th:insert="fragments/fragments :: deleteConfirmModal"></div>
+    <div th:insert="fragments/fragments :: deleteConfirmScript"></div>
+    <div th:insert="fragments/fragments :: restoreConfirmModal"></div>
+    <div th:insert="fragments/fragments :: restoreConfirmScript"></div>
+</body>
+</html>

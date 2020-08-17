@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/fragments :: header">
+</head>
+
+<body>
+    <div th:insert="fragments/fragments :: menu"></div>
+    <h3 align="center">Auditory information</h3>
+
+    <div class="container-sm">
+        <div th:insert="fragments/fragments :: notification"></div>
+        <form th:unless="${auditory==null}">
+            <div class="form-group row">
+                <label for="id" class="col-sm-2 col-form-label">Auditory name:</label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext" th:value="${auditory.name}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="id" class="col-sm-2 col-form-label">Auditory capacity:</label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext" th:value="${auditory.capacity}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="id" class="col-sm-2 col-form-label">Lecture description:</label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext" th:value="${auditory.description}">
+                </div>
+            </div>
+
+            <div th:unless="${auditory.deleted==true}" class="btn-group" role="group">
+                <a th:href="@{/auditories/getAll}" class="btn btn-secondary">Back</a>
+                <a th:href="@{/auditories/edit/(id=${auditory.id})}" class="btn btn-warning">Edit</a>
+                <a th:href="@{/auditories/delete/(id=${auditory.id})}" class="btn btn-danger" id="deleteButton">Delete</a>
+            </div>
+
+            <div th:if="${auditory.deleted==true}" class="btn-group" role="group">
+                <a th:href="@{/auditories/getAll}" class="btn btn-secondary">Back</a>
+                <a th:href="@{/auditories/undelete/(id=${auditory.id})}" class="btn btn-danger" id="restoreButton">Restore</a>
+            </div>
+        </form>
+        <div th:if="${auditory==null}">
+            <input type="button" class="btn btn-secondary" value="Back" onclick="history.back()">
+        </div>
+    </div>
+    <div th:insert="fragments/fragments :: deleteConfirmModal"></div>
+    <div th:insert="fragments/fragments :: deleteConfirmScript"></div>
+    <div th:insert="fragments/fragments :: restoreConfirmModal"></div>
+    <div th:insert="fragments/fragments :: restoreConfirmScript"></div>
+</body>
+</html>

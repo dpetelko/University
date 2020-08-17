@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/fragments :: header">
+</head>
+
+<body>
+<div th:insert="fragments/fragments :: menu"></div>
+<h3 align="center">Lessons list</h3>
+<div class="container-sm">
+    <p></p>
+    <div th:insert="fragments/fragments :: notification"></div>
+
+
+    <div id="accordion">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <a th:href="@{/lessons/edit}" class="btn btn-secondary btn-sm">Add new Lesson</a>
+                <button class="btn btn-secondary btn-sm" data-toggle="collapse" data-target="#collapseOne"
+                        aria-expanded="true" aria-controls="collapseOne">Filters</button>
+            </div>
+
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="container">
+                        <form action="#" th:action="@{/lessons/lessons}" method="get" th:object="${lessonFilter}">
+
+
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group row">
+                                            <label class="col-form-label">Enter start date:</label>
+                                            <input type="date" class="form-control form-control-sm"
+                                                   th:field="*{startDate}"  th:value=${startDate}/>
+                                            <span class="font-italic text-danger"
+                                                  th:if="${#fields.hasErrors('startDate')}"
+                                                  th:errors="*{startDate}"></span>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col">
+
+                                        <div class="form-group row">
+                                            <label class="col-form-label">Enter end date:</label>
+                                            <input type="date" class="form-control form-control-sm"
+                                                   th:field="*{endDate}" th:value=${endDate}/>
+                                            <span class="font-italic text-danger"
+                                                  th:if="${#fields.hasErrors('endDate')}"
+                                                  th:errors="*{endDate}"></span>
+                                        </div>
+
+
+                                    </div>
+                                    <!--                                    <div class="w-100"></div>-->
+                                    <div class="col">
+
+                                        <div class="form-group row">
+                                            <label class="col-form-label">Select teacher:</label>
+                                            <select class="form-control form-control-sm" th:field="*{teacherId}">
+                                                <option th:value="null">All teachers</option>
+                                                <option th:each="teacher:${teacherSelect}" th:value="${teacher.id}"
+                                                        th:utext="${teacher.firstName+' '+teacher.lastName}"></option>
+                                            </select>
+                                            <span class="font-italic text-danger"
+                                                  th:if="${#fields.hasErrors('teacherId')}"
+                                                  th:errors="*{teacherId}"></span>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col">
+
+
+                                        <div class="form-group row">
+                                            <label class="col-form-label">Select group:</label>
+                                            <select class="form-control form-control-sm" th:field="*{groupId}">
+                                                <option th:value="null">All groups</option>
+                                                <option th:each="group:${groupSelect}" th:value="${group.id}"
+                                                        th:utext="${group.name}"></option>
+                                            </select>
+                                            <span class="font-italic text-danger"
+                                                  th:if="${#fields.hasErrors('groupId')}"
+                                                  th:errors="*{groupId}"></span>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <button class="btn btn-outline-info btn-sm" type="submit">Apply</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p></p>
+    <table class="table table-stripped">
+        <thead>
+        <tr>
+            <td><strong>Date</strong></td>
+            <td><strong>Lecture</strong></td>
+            <td><strong>Auditory</strong></td>
+            <td><strong>Subject</strong></td>
+            <td><strong>Teacher</strong></td>
+            <td></td>
+        </tr>
+        </thead>
+        <th:block th:each="lesson:${lessons}">
+            <tr th:if="${lesson.deleted==false}">
+                <td th:text="${#temporals.format(lesson.date, 'dd.MM.yyyy')}"></td>
+                <td th:text="${lesson.lectureName+', start time '+lesson.lectureStartTime}"></td>
+                <td th:text="${lesson.auditoryName}"></td>
+                <td th:text="${lesson.subjectName}"></td>
+                <td th:text="${lesson.teacherFirstName+' '+lesson.teacherLastName}"></td>
+                <td></td>
+                <td>
+                    <div class="btn-group btn-group-sm">
+                        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">Action
+                        </button>
+                        <div class="dropdown-menu">
+                            <a th:href="@{/lessons/getById/(id=${lesson.id})}" class="dropdown-item">Info</a>
+                            <a th:href="@{/lessons/edit/(id=${lesson.id})}" class="dropdown-item">Edit</a>
+                            <a th:href="@{/lessons/delete/(id=${lesson.id})}"
+                               class="dropdown-item text-danger font-weight-bold" id="deleteButton">Delete</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr th:unless="${lesson.deleted==false}" class="table-danger">
+                <td th:text="${lesson.date}"></td>
+                <td th:text="${lesson.lectureStartTime}"></td>
+                <td th:text="${lesson.auditoryName}"></td>
+                <td th:text="${lesson.subjectName}"></td>
+                <td th:text="${lesson.teacherLastName}"></td>
+                <td>
+                    <div class="btn-group btn-group-sm">
+                        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">Action
+                        </button>
+                        <div class="dropdown-menu">
+                            <a th:href="@{/lessons/getById/(id=${lesson.id})}" class="dropdown-item">Info</a>
+                            <a th:href="@{/lessons/undelete/(id=${lesson.id})}"
+                               class="dropdown-item text-danger font-weight-bold" id="restoreButton">Restore</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </th:block>
+    </table>
+</div>
+<div th:insert="fragments/fragments :: deleteConfirmModal"></div>
+<div th:insert="fragments/fragments :: deleteConfirmScript"></div>
+<div th:insert="fragments/fragments :: restoreConfirmModal"></div>
+<div th:insert="fragments/fragments :: restoreConfirmScript"></div>
+</body>
+</html>

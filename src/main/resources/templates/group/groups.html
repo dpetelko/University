@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/fragments :: header">
+</head>
+
+<body>
+<div th:insert="fragments/fragments :: menu"></div>
+<h3 align="center">Groups list</h3>
+<div class="container-sm">
+    <a th:href="@{/groups/edit}" class="btn btn-secondary">Add new Group</a>
+    <p></p>
+    <div th:insert="fragments/fragments :: notification"></div>
+    <table class="table table-stripped">
+        <thead>
+        <tr>
+            <td><strong>Name</strong></td>
+            <td><strong>Department</strong></td>
+            <td></td>
+        </tr>
+        </thead>
+        <th:block th:each="group:${groups}">
+            <tr th:if="${group.deleted==false}">
+                <td th:text="${group.name}"></td>
+                <td th:text="${group?.departmentName}"></td>
+                <td>
+
+
+                    <div class="btn-group btn-group-sm">
+                        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">Action
+                        </button>
+
+                        <div class="dropdown-menu">
+
+                            <a th:href="@{/lessons/personal-lessons/(groupId=${group.id})}" class="dropdown-item">Get schedule</a>
+                            <a th:href="@{/groups/getById/(id=${group.id})}" class="dropdown-item">Info</a>
+                            <a th:href="@{/groups/edit/(id=${group.id})}" class="dropdown-item">Edit</a>
+                            <a th:href="@{/groups/delete/(id=${group.id})}"
+                               class="dropdown-item text-danger font-weight-bold" id="deleteButton">Delete</a>
+                        </div>
+
+                    </div>
+
+                </td>
+            </tr>
+
+            <tr th:unless="${group.deleted==false}" class="table-danger">
+                <td th:text="${group.name}"></td>
+                <td th:text="${group?.departmentName}"></td>
+                <td>
+                    <div class="btn-group btn-group-sm">
+                        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">Action
+                        </button>
+                        <div class="dropdown-menu">
+                            <a th:href="@{/groups/getById/(id=${group.id})}" class="dropdown-item">Info</a>
+                            <a th:href="@{/groups/undelete/(id=${group.id})}"
+                               class="dropdown-item text-danger font-weight-bold" id="restoreButton">Restore</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </th:block>
+    </table>
+</div>
+<div th:insert="fragments/fragments :: deleteConfirmModal"></div>
+<div th:insert="fragments/fragments :: deleteConfirmScript"></div>
+<div th:insert="fragments/fragments :: restoreConfirmModal"></div>
+<div th:insert="fragments/fragments :: restoreConfirmScript"></div>
+</body>
+</html>

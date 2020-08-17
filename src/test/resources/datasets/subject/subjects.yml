@@ -1,0 +1,17 @@
+departments:
+  - id: 1
+    name: "Humanitarian Department"
+    description: "FU"
+subjects:
+  - id: 1
+    name: "Geography"
+    description: "Seeks an understanding of Earth and its human and natural complexities"
+    department_id: 1
+  - id: 2
+    name: "Biology"
+    description: "Studies life and living organisms"
+    department_id: 1
+  - id: 3
+    name: "Chemistry"
+    description: "Studies elements and compounds"
+    department_id: 1

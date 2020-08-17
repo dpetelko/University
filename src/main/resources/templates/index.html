@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/fragments :: header">
+</head>
+
+<body>
+    <div th:insert="fragments/fragments :: menu"></div>
+    <h2 align="center" th:text="${message}"></h2>
+    <img class="mx-auto d-block" th:src="@{images/Capture.PNG}">
+</body>
+</html>

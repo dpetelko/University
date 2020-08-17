@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/fragments :: header">
+</head>
+
+<body>
+    <div th:insert="fragments/fragments :: menu"></div>
+    <h3 align="center">Student information</h3>
+
+    <div class="container-sm">
+        <div th:insert="fragments/fragments :: notification"></div>
+        
+        <form th:unless="${student==null}">
+            <div class="form-group row">
+                <label for="id" class="col-sm-2 col-form-label">First name:</label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext" th:value="${student.firstName}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="id" class="col-sm-2 col-form-label">Last name:</label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext" th:value="${student.lastName}">
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label for="id" class="col-sm-2 col-form-label">E-mail:</label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext" th:value="${student.email}">
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label for="id" class="col-sm-2 col-form-label">Phone number:</label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext" th:value="${student.phoneNumber}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="id" class="col-sm-2 col-form-label">Group Name</label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext" th:value="${student.groupName}">
+                </div>
+            </div>
+
+
+            <div th:unless="${student.deleted==true}" class="btn-group">
+                <a th:href="@{/students/getAll}" class="btn btn-secondary">Back</a> 
+                <a th:href="@{/students/edit/(id=${student.id})}" class="btn btn-warning">Edit</a>
+                <div th:unless="${student.groupId==null}">
+                    <a th:href="@{/lessons/personal-lessons/(groupId=${student.groupId})}" class="btn btn-secondary">Get schedule</a>
+                </div>
+                <a th:href="@{/students/delete/(id=${student.id})}" class="btn btn-danger" id="deleteButton">Delete</a>
+            </div>
+
+            <div th:if="${student.deleted==true}" class="btn-group">
+                <a th:href="@{/students/getAll}" class="btn btn-secondary">Back</a> 
+                <a th:href="@{/students/undelete/(id=${student.Id})}" class="btn btn-danger" id="restoreButton">Restore</a>
+            </div>
+        </form>
+
+        <div th:if="${student==null}">
+            <input type="button" class="btn btn-secondary" value="Back" onclick="history.back()">
+        </div>
+
+    </div>
+    
+    <div th:insert="fragments/fragments :: deleteConfirmModal"></div>
+    <div th:insert="fragments/fragments :: deleteConfirmScript"></div>
+    <div th:insert="fragments/fragments :: restoreConfirmModal"></div>
+    <div th:insert="fragments/fragments :: restoreConfirmScript"></div>
+</body>
+</html>

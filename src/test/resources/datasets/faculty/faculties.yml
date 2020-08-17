@@ -1,0 +1,7 @@
+faculties:
+  - id: 1
+    name: "Psy"
+    description: "FU"
+  - id: 2
+    name: "Gamma"
+    description: "FU"

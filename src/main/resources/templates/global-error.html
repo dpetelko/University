@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/fragments :: header">
+</head>
+
+<body>
+    <div th:insert="fragments/fragments :: menu"></div>
+    <h3 align="center">Error!</h3>
+    <div class="container-sm">
+        
+            <div th:insert="fragments/fragments :: notification"></div>
+            <img class="mx-auto d-block" th:src="@{images/global-error.png}">
+        
+        <input type="button" class="btn btn-secondary" value="Back" onclick="history.back()">
+    </div>
+</body>
+</html>

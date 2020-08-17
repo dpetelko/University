@@ -1,0 +1,39 @@
+departments:
+  - id: 1
+    name: "Humanitarian Department"
+    description: "FU"
+subjects:
+  - id: 1
+    name: "Geography"
+    description: "Seeks an understanding of Earth and its human and natural complexities"
+    department_id: 1
+  - id: 2
+    name: "Biology"
+    description: "Studies life and living organisms"
+    department_id: 1
+  - id: 3
+    name: "Chemistry"
+    description: "Studies elements and compounds"
+    department_id: 1
+teachers:
+  - id: 1
+    first_name: "Ivan"
+    last_name: "Ivanov"
+    email: "teacher1@11.ru"
+    phone_number: "+78989632121"
+    subject_id: 1
+    department_id: 1
+  - id: 2
+    first_name: "Petr"
+    last_name: "Petrov"
+    email: "teacher2@22.ru"
+    phone_number: "+78989632121"
+    subject_id: 2
+    department_id: 1
+  - id: 3
+    first_name: "Sidor"
+    last_name: "Sidorov"
+    email: "teacher3@33.ru"
+    phone_number: "+78989632121"
+    subject_id: 3
+    department_id: 1

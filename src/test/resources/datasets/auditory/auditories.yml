@@ -1,0 +1,9 @@
+auditories:
+  - id: 1
+    name: "AAA"
+    description: "Large auditory"
+    capacity: 200
+  - id: 2
+    name: "BBB"
+    description: "Small auditory"
+    capacity: 50

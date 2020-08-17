@@ -1,0 +1,7 @@
+students:
+  - id: 1
+    first_name: "Dmitry"
+    last_name: "Petelko"
+    email: "77@77.ru"
+    phone_number: "+78989632121"
+    group_id: 1

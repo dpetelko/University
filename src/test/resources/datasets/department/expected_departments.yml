@@ -1,0 +1,6 @@
+departments:
+  - id: 1
+    name: "Military Department"
+    description: "FU"
+    faculty_id: 1
+
